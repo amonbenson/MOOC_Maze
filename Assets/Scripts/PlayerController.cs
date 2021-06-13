@@ -59,4 +59,11 @@ public class PlayerController : MonoBehaviour {
         Vector3 velocity = (transform.forward * inputDirection.y + transform.right * inputDirection.x) * walkSpeed + gravityVelocity;
         controller.Move(velocity * Time.deltaTime);
     }
+
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Target")) {
+            Debug.Log("Target Reached");
+            Destroy(other.gameObject);
+        }
+    }
 }
