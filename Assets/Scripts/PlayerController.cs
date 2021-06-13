@@ -6,10 +6,13 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] Transform playerCamera = null;
     [SerializeField] float mouseSensitivity = 3.5f;
     [SerializeField] float walkSpeed = 3.0f;
+    [SerializeField] float gravityMultiplier = 1.0f;
+    [SerializeField] float jumpVelocity = 3.0f;
 
     [SerializeField] bool lockCursor = true;
 
     float cameraPitch = 0.0f;
+    Vector3 gravityVelocity = Vector3.zero;
     CharacterController controller;
 
     void Start() {
@@ -19,8 +22,6 @@ public class PlayerController : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
-        Debug.Log(Physics.gravity);
     }
 
     void Update() {
@@ -44,7 +45,18 @@ public class PlayerController : MonoBehaviour {
         Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (inputDirection.magnitude > 1.0f) inputDirection.Normalize();
 
-        Vector3 velocity = (transform.forward * inputDirection.y + transform.right * inputDirection.x) * walkSpeed;
+        // apply gravity
+        if (controller.isGrounded) {
+            gravityVelocity = Vector3.zero;
+
+            // jump
+            if (Input.GetAxis("Jump") > 0) gravityVelocity += Vector3.up * jumpVelocity;
+        } else {
+            gravityVelocity += Physics.gravity * gravityMultiplier * Time.deltaTime;
+        }
+
+        // move the player
+        Vector3 velocity = (transform.forward * inputDirection.y + transform.right * inputDirection.x) * walkSpeed + gravityVelocity;
         controller.Move(velocity * Time.deltaTime);
     }
 }
