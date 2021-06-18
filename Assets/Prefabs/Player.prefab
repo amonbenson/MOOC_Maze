@@ -128,7 +128,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.5
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -149,4 +149,6 @@ MonoBehaviour:
   playerCamera: {fileID: 735316810162986231}
   mouseSensitivity: 3.5
   walkSpeed: 3
+  gravityMultiplier: 1
+  jumpVelocity: 3
   lockCursor: 1
