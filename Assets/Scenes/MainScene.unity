@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0, g: 0, b: 0, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.1
+  m_FogDensity: 0.5
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.745283, g: 0.636075, b: 0.467169, a: 1}
@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 172785870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -168,10 +168,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 10
   height: 10
+  numTokens: 5
   size: 1
   wallPrefab: {fileID: 464378476799238211, guid: 85503b549f577764ea6e675badf3d1d9, type: 3}
   floorPrefab: {fileID: 5962585720015233452, guid: 80db8a4dc6276ce40b148c63e2d5ca76, type: 3}
   playerPrefab: {fileID: 735316810483389292, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
+  tokenPrefab: {fileID: 1491954956318921904, guid: a11b8f303daffd34981bc1ba2e8fa4b4, type: 3}
 --- !u!1 &2023121285
 GameObject:
   m_ObjectHideFlags: 0
