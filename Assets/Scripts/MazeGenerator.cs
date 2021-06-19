@@ -13,10 +13,19 @@ public struct Neighbour
 }
 
 public class MazeGenerator {
-    public const int TOKEN_DENSITY = 3;
+    public const int TOKEN_DENSITY = 5;
 
     private System.Random random = new System.Random();
     private Maze maze = null;
+
+    private float NextGaussian(float mean, float stdDev) {
+        // Box–Muller transform
+        float u1 = 1.0f - (float) random.NextDouble();
+        float u2 = 1.0f - (float) random.NextDouble();
+
+        float gaussian = Mathf.Sqrt(-2.0f * Mathf.Log(u1)) * Mathf.Sin(2.0f * Mathf.PI * u2);
+        return mean + stdDev * gaussian;
+    }
 
     private Maze.WallState GetOppositeWall(Maze.WallState wall) {
         return (Maze.WallState) ((uint) wall >> 2 | (uint) wall << 2) & Maze.WallState.FULL;
@@ -110,9 +119,16 @@ public class MazeGenerator {
         maze.tokens = new List<Vector2Int>();
 
         // generate a token every TOKEN_DENSITY column and row
-        for (int x = 0; x < maze.size.x; x += TOKEN_DENSITY) {
-            for (int y = 0; y < maze.size.y; y += TOKEN_DENSITY) {
-                maze.tokens.Add(new Vector2Int(x, y)); // TODO: add normally distributed offset to position
+        for (int x = random.Next(0, TOKEN_DENSITY); x < maze.size.x; x += TOKEN_DENSITY) {
+            for (int y = random.Next(0, TOKEN_DENSITY); y < maze.size.y; y += TOKEN_DENSITY) {
+                // offset the position using a normal distribution
+                var position = new Vector2Int(
+                    Mathf.RoundToInt(NextGaussian(x, TOKEN_DENSITY / 2.0f)),
+                    Mathf.RoundToInt(NextGaussian(y, TOKEN_DENSITY / 2.0f))
+                );
+                position.Clamp(Vector2Int.zero, maze.size - Vector2Int.one);
+
+                maze.tokens.Add(position);
             }
         }
     }

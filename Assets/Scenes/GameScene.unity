@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 10
-  height: 10
+  height: 11
   wallPrefab: {fileID: 1167190820347427777, guid: 85503b549f577764ea6e675badf3d1d9, type: 3}
   tokenPrefab: {fileID: 1491954956318921905, guid: a11b8f303daffd34981bc1ba2e8fa4b4, type: 3}
   maze: {fileID: 1789741263}
