@@ -28,7 +28,7 @@ public class MazeGenerator {
     }
 
     private Maze.WallState GetOppositeWall(Maze.WallState wall) {
-        return (Maze.WallState) ((uint) wall >> 2 | (uint) wall << 2) & Maze.WallState.FULL;
+        return (Maze.WallState) (((uint) wall >> 2) & 0b0011 | ((uint) wall << 2) & 0b1100 | (uint) wall & ~0b1111);
     }
 
     private void GenerateWalls() {
@@ -60,8 +60,9 @@ public class MazeGenerator {
             }
         }
 
-        maze.walls[0, 0] &= Maze.WallState.UP;
-        maze.walls[maze.size.x - 1, maze.size.y - 1] &= Maze.WallState.DOWN;
+        // entrance and exit
+        maze.walls[0, 0] &= ~Maze.WallState.DOWN & ~Maze.WallState.LEFT;
+        maze.walls[maze.size.x - 1, maze.size.y - 1] &= ~Maze.WallState.UP & ~Maze.WallState.RIGHT;
     }
 
     private List<Neighbour> GetUnvisitedNeighbours(Vector2Int p)

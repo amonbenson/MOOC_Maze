@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MazeController : MonoBehaviour {
     [Range(1, 50)]
@@ -8,10 +9,14 @@ public class MazeController : MonoBehaviour {
     [Range(1, 50)]
     public int height = 10;
 
+    public GameObject floor = null;
+    public GameObject player = null;
+
     public GameObject wallPrefab = null;
     public GameObject tokenPrefab = null;
     
     public Maze maze = null;
+    public Grid grid = null;
 
     [Range(0f, 5.0f)]
     public float tokenHeight = 1.0f;
@@ -24,17 +29,12 @@ public class MazeController : MonoBehaviour {
     [Range(0f, 100f)]
     public float floorTextureScale = 4.0f;
 
-    private Grid grid = null;
-    private GameObject player = null;
-    private GameObject floor = null;
+    private PlayerController playerController = null;
     private Material floorMaterial;
-
     private MazeGenerator generator = null;
 
     void Start() {
-        player = transform.Find("Player").gameObject;
-
-        floor = transform.Find("Floor").gameObject;
+        playerController = player.GetComponent<PlayerController>();
         floorMaterial = floor.GetComponent<Renderer>().sharedMaterial;
 
         // setup the grid
@@ -42,10 +42,9 @@ public class MazeController : MonoBehaviour {
         grid.cellSize = new Vector3(wallWidth, wallWidth, 1.0f);
         grid.cellGap = Vector3.zero;
 
-        // setup the prefabs
         wallPrefab.transform.localScale = new Vector3(wallWidth, wallHeight, wallDepth);
 
-        // TODO: move to GameController
+        // TODO: move to a higher level game controller
         maze = ScriptableObject.CreateInstance<Maze>();
         maze.Init(new Vector2Int(width, height));
 
@@ -58,9 +57,6 @@ public class MazeController : MonoBehaviour {
     private IEnumerator RenderNextFrame() {
         yield return new WaitForEndOfFrame();
         Render();
-    }
-
-    void Update() {
     }
 
     private Vector3 CellToLocalScale(Vector2 scale) {
@@ -82,8 +78,8 @@ public class MazeController : MonoBehaviour {
         if (maze == null) return;
 
         // place the player
-        player.transform.localPosition = CellToLocalScale(Vector2.zero);
-        player.transform.LookAt(CellToLocalScale(Vector2.one), Vector3.up);
+        player.transform.localPosition = grid.CellToLocalInterpolated(new Vector2(0.5f, 0.5f));
+        playerController.LookAt(grid.CellToLocal(Vector3Int.one));
 
         // resize the floor
         floor.transform.localScale = CellToLocalScale(maze.size);

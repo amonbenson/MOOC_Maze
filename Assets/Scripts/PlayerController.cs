@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] Transform playerCamera = null;
-    [SerializeField] float mouseSensitivity = 3.5f;
+    [SerializeField] float mouseSensitivity = 300f;
     [SerializeField] float walkSpeed = 3.0f;
     [SerializeField] float gravityMultiplier = 1.0f;
     [SerializeField] float jumpVelocity = 3.0f;
 
     [SerializeField] bool lockCursor = true;
+    
+    public UnityEvent<Vector2Int, Vector2Int> gridPositionChangeEvent;
 
-    float cameraPitch = 0.0f;
-    Vector3 gravityVelocity = Vector3.zero;
-    CharacterController controller;
+    private Vector2 viewingAngle = Vector2.zero;
+    private Vector3 gravityVelocity = Vector3.zero;
+
+    private MazeController mazeController = null;
+    private CharacterController characterController = null;
+
+    private Vector2Int previousGridPosition = Vector2Int.zero;
 
     void Start() {
-        controller = GetComponent<CharacterController>();
+        mazeController = GetComponentInParent<MazeController>();
+        characterController = GetComponent<CharacterController>();
 
         if (lockCursor) {
             Cursor.lockState = CursorLockMode.Locked;
@@ -27,18 +35,23 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         UpdateViewing();
         UpdateMovement();
+
+        Vector2Int gridPosition = (Vector2Int) mazeController.grid.LocalToCell(transform.localPosition);
+        if (gridPosition != previousGridPosition) {
+            gridPositionChangeEvent.Invoke(gridPosition, previousGridPosition);
+            previousGridPosition = gridPosition;
+        }
     }
 
     void UpdateViewing() {
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        viewingAngle += mouseDelta * mouseSensitivity * Time.deltaTime;
 
-        // pitch
-        cameraPitch -= mouseDelta.y * mouseSensitivity;
-        cameraPitch = Mathf.Clamp(cameraPitch, -90.0f, 90.0f);
-        playerCamera.localEulerAngles = Vector3.right * cameraPitch;
+        if (viewingAngle.y < -90) viewingAngle.y = -90;
+        if (viewingAngle.y > 90) viewingAngle.y = 90;
 
-        // yaw
-        transform.Rotate(Vector3.up * mouseDelta.x * mouseSensitivity);
+        transform.localRotation = Quaternion.AngleAxis(viewingAngle.x, Vector3.up);
+        playerCamera.localRotation = Quaternion.AngleAxis(-viewingAngle.y, Vector3.right);
     }
 
     void UpdateMovement() {
@@ -46,7 +59,7 @@ public class PlayerController : MonoBehaviour {
         if (inputDirection.magnitude > 1.0f) inputDirection.Normalize();
 
         // apply gravity
-        if (controller.isGrounded) {
+        if (characterController.isGrounded) {
             gravityVelocity = Vector3.zero;
 
             // jump
@@ -57,7 +70,7 @@ public class PlayerController : MonoBehaviour {
 
         // move the player
         Vector3 velocity = (transform.forward * inputDirection.y + transform.right * inputDirection.x) * walkSpeed + gravityVelocity;
-        controller.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other) {
@@ -65,5 +78,10 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Token Collected!");
             Destroy(other.gameObject);
         }
+    }
+
+    public void LookAt(Vector3 target) {
+        var euler = (Vector2) Quaternion.LookRotation(target - playerCamera.position, Vector3.up).eulerAngles;
+        viewingAngle = new Vector2(euler.y, -euler.x);
     }
 }

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 735316810162986231}
-  mouseSensitivity: 3.5
+  mouseSensitivity: 300
   walkSpeed: 3
   gravityMultiplier: 1
   jumpVelocity: 3
