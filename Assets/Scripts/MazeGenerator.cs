@@ -15,7 +15,7 @@ public struct Neighbour
 public class MazeGenerator {
     public const int TOKEN_DENSITY = 5;
 
-    private System.Random random = new System.Random();
+    private System.Random random = new System.Random(123456789);
     private Maze maze = null;
 
     private float NextGaussian(float mean, float stdDev) {
