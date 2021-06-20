@@ -11,6 +11,8 @@ public class MazeAudioSourceController : MonoBehaviour {
     Vector2Int sourceGridPosition = Vector2Int.zero;
     Vector2Int playerGridPosition = Vector2Int.zero;
 
+    private MazePathFinder pathFinder = new MazePathFinder();
+
     void Start() {
         audioSource = transform.GetComponentInChildren<AudioSource>();
         mazeController = transform.GetComponentInParent<MazeController>();
@@ -33,6 +35,14 @@ public class MazeAudioSourceController : MonoBehaviour {
     }
 
     public void RecalculateVirtualPosition() {
-        Debug.Log("Need to calculate path " + playerGridPosition + " -> " + sourceGridPosition);
+        Debug.Log("path from " + playerGridPosition + " to " + sourceGridPosition + " is:");
+
+        Stack<Vector2Int> path = pathFinder.AStar(mazeController.maze, playerGridPosition, sourceGridPosition);
+        if (path == null) Debug.LogWarning("No path found");
+        else {
+            foreach (var p in path) {
+                Debug.Log("    " + p);
+            }
+        }
     }
 }

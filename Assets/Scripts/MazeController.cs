@@ -91,20 +91,20 @@ public class MazeController : MonoBehaviour {
                 Maze.WallState wallState = maze.walls[x, y];
                 Vector2Int position = new Vector2Int(x, y);
 
-                if (wallState.HasFlag(Maze.WallState.LEFT)) {
-                    InstantiateWall(position + new Vector2(0, 0.5f), false);
-                }
-
-                if (wallState.HasFlag(Maze.WallState.RIGHT) && x == maze.size.x - 1) {
-                    InstantiateWall(position + new Vector2(1.0f, 0.5f), false);
-                }
-
                 if (wallState.HasFlag(Maze.WallState.UP)) {
                     InstantiateWall(position + new Vector2(0.5f, 1.0f), true);
                 }
 
+                if (wallState.HasFlag(Maze.WallState.RIGHT)) {
+                    InstantiateWall(position + new Vector2(1.0f, 0.5f), false);
+                }
+
                 if (wallState.HasFlag(Maze.WallState.DOWN) && y == 0) {
                     InstantiateWall(position + new Vector2(0.5f, 0.0f), true);
+                }
+
+                if (wallState.HasFlag(Maze.WallState.LEFT) && x == 0) {
+                    InstantiateWall(position + new Vector2(0, 0.5f), false);
                 }
             }
         }
