@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /*
 Maze Generator loosly based on: https://github.com/gamedolphin/youtube_unity_maze
@@ -15,8 +16,15 @@ public struct Neighbour
 public class MazeGenerator {
     public const int TOKEN_DENSITY = 5;
 
-    private System.Random random = new System.Random(/*123456789*/);
+    private int seed;
+    private System.Random random;
     private Maze maze = null;
+
+    public MazeGenerator() {
+        seed = Environment.TickCount;
+        random = new System.Random(seed);
+        Debug.Log("Generator using seed " + seed);
+    }
 
     private float NextGaussian(float mean, float stdDev) {
         // Box–Muller transform

@@ -214,13 +214,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1893058663}
     m_Modifications:
-    - target: {fileID: 5316553378482610662, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
-      propertyPath: MaxDistance
-      value: 50
+    - target: {fileID: 5316553379555995168, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
+      propertyPath: updateSmoothness
+      value: 0.99
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995170, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_Name
       value: MazeAudioSource
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316553379555995170, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_RootOrder
@@ -228,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.52
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -236,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.73
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalRotation.w

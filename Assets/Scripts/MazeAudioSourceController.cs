@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MazeAudioSourceController : MonoBehaviour {
     public bool randomStart = true;
+    [Range(0.0f, 10.0f)]
+    public float updateSpeed = 3f;
 
     private AudioSource audioSource;
     private MazeController mazeController;
@@ -12,6 +14,7 @@ public class MazeAudioSourceController : MonoBehaviour {
     private Vector2Int previousSourceGridPosition = Vector2Int.zero;
     private Vector2Int sourceGridPosition = Vector2Int.zero;
     private Vector2Int playerGridPosition = Vector2Int.zero;
+    private Vector3 sourceVirtualWorldPosition = Vector3.zero;
 
     private MazePathFinder pathFinder = new MazePathFinder();
 
@@ -27,11 +30,14 @@ public class MazeAudioSourceController : MonoBehaviour {
     }
 
     void Update() {
-        sourceGridPosition = (Vector2Int) mazeController.grid.LocalToCell(transform.localPosition);
-        if (sourceGridPosition != previousSourceGridPosition) {
-            RecalculateVirtualPosition();
-            previousSourceGridPosition = sourceGridPosition;
-        }
+        // get the source position
+        sourceGridPosition = (Vector2Int) mazeController.grid.WorldToCell(transform.position);
+
+        // smoothly update the actual audio source position
+        Vector3 virtualLocalPosition = audioSource.transform.InverseTransformPoint(sourceVirtualWorldPosition);
+        audioSource.transform.localPosition = Vector3.Lerp(audioSource.transform.localPosition,
+                virtualLocalPosition,
+                Time.deltaTime * updateSpeed);
     }
 
     public void OnGridPositionChange(Vector2Int gridPosition, Vector2Int previousGridPosition) {
@@ -57,23 +63,25 @@ public class MazeAudioSourceController : MonoBehaviour {
         // calculate the shortest path to the sound source
         Stack<Vector2Int> path = pathFinder.AStar(mazeController.maze, playerGridPosition, sourceGridPosition);
         if (path == null) return;
+        float distance = path.Count;
 
-        // get the direction from which the audio is coming
-        // TODO: better algorithm:
-        // -> cast a ray to each grid cell starting two cells at the player position.
-        // -> the first ray that hits a wall determines the direction the audio should come from.
-        // for now we will just use the next cell
-        Vector2Int nextCell = path.Pop();
-        Vector3 nextCellCenter = mazeController.grid.GetCellCenterWorld((Vector3Int) nextCell);
+        // average the next few cell center positions
+        int i = 0, n = 2;
+        Vector3 averageCellCenter = Vector3.zero;
+        for (; i < n && path.Count > 0; i++) {
+            Vector2Int cell = path.Pop();
+            averageCellCenter += mazeController.grid.GetCellCenterWorld((Vector3Int) cell);
+        }
+        if (i != 0) averageCellCenter /= i;
+
+        // use the distance from the player to the averaged cell center to get the audio direction
         Vector3 playerCellCenter = mazeController.grid.GetCellCenterWorld((Vector3Int) playerGridPosition);
-        Vector3 audioDirection = (nextCellCenter - playerCellCenter);
+        Vector3 audioDirection = (averageCellCenter - playerCellCenter);
         audioDirection.Normalize();
 
         // set the virtual position in world coordinates
-        float distance = path.Count + 1;
-        Vector3 virtualPosition = playerCellCenter + audioDirection * distance;
-        virtualPosition.y = transform.position.y; // do not change the y transform
-        audioSource.transform.position = virtualPosition;
+        sourceVirtualWorldPosition = playerCellCenter + audioDirection * distance;
+        sourceVirtualWorldPosition.y = transform.position.y; // do not change the y transform
 
         // play the audio
         if (!audioSource.isPlaying) audioSource.Play();
