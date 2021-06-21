@@ -27,7 +27,7 @@ public class MazePathFinder {
         FibonacciHeap<Node, int> openList = new FibonacciHeap<Node, int>(0);
         Dictionary<Vector2Int, Node> closedList = new Dictionary<Vector2Int, Node>();
 
-        Node currentNode = new Node(origin, null, 0, ComputeCost(origin, target));
+        Node currentNode = new Node(origin, null, 0, Manhattan(origin, target));
         openList.Insert(new FibonacciHeapNode<Node, int>(currentNode, currentNode.estimatedScore));
         closedList.Add(currentNode.position, currentNode);
 
@@ -60,7 +60,7 @@ public class MazePathFinder {
                 // update the node's parameters
                 nextNode.parent = currentNode;
                 nextNode.routeScore = nextScore;
-                nextNode.estimatedScore = nextScore + ComputeCost(nextPosition, target);
+                nextNode.estimatedScore = nextScore + Manhattan(nextPosition, target);
 
                 // put the node into the open list
                 openList.Insert(new FibonacciHeapNode<Node, int>(nextNode, nextNode.estimatedScore));
@@ -80,8 +80,8 @@ public class MazePathFinder {
         return path;
     }
 
-    private int ComputeCost(Vector2Int from, Vector2Int to) {
-        return Mathf.Abs(from.x - to.x) + Mathf.Abs(from.y - to.y); // use manhattan distance
+    public int Manhattan(Vector2Int from, Vector2Int to) {
+        return Mathf.Abs(from.x - to.x) + Mathf.Abs(from.y - to.y);
     }
 
     private class Node {
