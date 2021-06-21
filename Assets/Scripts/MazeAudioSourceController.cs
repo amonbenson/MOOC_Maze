@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeAudioSourceController : MonoBehaviour {
-    public float range = 10;
+    public bool randomStart = true;
 
     private AudioSource audioSource;
     private MazeController mazeController;
@@ -21,6 +21,9 @@ public class MazeAudioSourceController : MonoBehaviour {
         playerController = mazeController.GetComponentInChildren<PlayerController>();
 
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
+
+        // seek to a random position
+        if (randomStart) audioSource.time = Random.Range(0, audioSource.clip.length);
     }
 
     void Update() {
@@ -37,27 +40,23 @@ public class MazeAudioSourceController : MonoBehaviour {
     }
 
     public void RecalculateVirtualPosition() {
-        // we are on the same cell (normaly a token and its audio source should get destroyed at this point)
+        // we are on the same cell (normaly the audio source should get destroyed at this point)
         if (playerGridPosition == sourceGridPosition) {
-            audioSource.transform.localPosition = Vector3.zero;
-            audioSource.Play();
+            audioSource.transform.position = transform.position;
+            if (!audioSource.isPlaying) audioSource.Play();
             return;
         }
 
         // check the distance
         float airDistance = Vector2.Distance(playerGridPosition, sourceGridPosition);
-        if (airDistance >= range) {
-            audioSource.Stop();
+        if (airDistance >= audioSource.maxDistance) {
+            audioSource.Pause();
             return;
         }
 
         // calculate the shortest path to the sound source
         Stack<Vector2Int> path = pathFinder.AStar(mazeController.maze, playerGridPosition, sourceGridPosition);
-        if (path == null || path.Count < 1 || path.Count > range) {
-            audioSource.Stop();
-            return;
-        }
-        float actualDistance = path.Count;
+        if (path == null) return;
 
         // get the direction from which the audio is coming
         // TODO: better algorithm:
@@ -71,10 +70,12 @@ public class MazeAudioSourceController : MonoBehaviour {
         audioDirection.Normalize();
 
         // set the virtual position in world coordinates
-        Vector3 virtualPosition = playerCellCenter + audioDirection * actualDistance;
+        float distance = path.Count + 1;
+        Vector3 virtualPosition = playerCellCenter + audioDirection * distance;
         virtualPosition.y = transform.position.y; // do not change the y transform
         audioSource.transform.position = virtualPosition;
 
-        Debug.Log(virtualPosition);
+        // play the audio
+        if (!audioSource.isPlaying) audioSource.Play();
     }
 }
