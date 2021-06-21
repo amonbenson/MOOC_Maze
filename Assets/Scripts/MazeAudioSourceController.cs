@@ -8,6 +8,8 @@ public class MazeAudioSourceController : MonoBehaviour {
     public float updateSpeed = 3f;
 
     private AudioSource audioSource;
+    private AudioReverbFilter audioReverbFilter;
+
     private MazeController mazeController;
     private PlayerController playerController;
 
@@ -20,8 +22,19 @@ public class MazeAudioSourceController : MonoBehaviour {
 
     void Start() {
         audioSource = transform.GetComponentInChildren<AudioSource>();
-        mazeController = transform.GetComponentInParent<MazeController>();
+        audioReverbFilter = GetComponentInChildren<AudioReverbFilter>();
+
+        mazeController = GetComponentInParent<MazeController>();
+        if (mazeController == null) {
+            Debug.LogError("Maze Audio Source must be placed inside a Maze context");
+            return;
+        }
+
         playerController = mazeController.GetComponentInChildren<PlayerController>();
+        if (playerController == null) {
+            Debug.LogError("No player found");
+            return;
+        }
 
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
 
@@ -91,5 +104,8 @@ public class MazeAudioSourceController : MonoBehaviour {
 
         // play the audio
         if (!audioSource.isPlaying) audioSource.Play();
+        
+        // update the reverb amount
+        audioReverbFilter.room = Mathf.Lerp(-10000, 0, distance / audioSource.maxDistance);
     }
 }

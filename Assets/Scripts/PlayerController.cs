@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour {
 
     void UpdateViewing() {
         Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-        viewingAngle += mouseDelta * mouseSensitivity * Time.deltaTime;
+        viewingAngle += mouseDelta * mouseSensitivity;
 
         if (viewingAngle.y < -90) viewingAngle.y = -90;
         if (viewingAngle.y > 90) viewingAngle.y = 90;

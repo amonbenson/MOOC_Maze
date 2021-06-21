@@ -232,7 +232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.5
+      value: 14.5
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -240,7 +240,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.5
+      value: 14.5
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalRotation.w
@@ -362,6 +362,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 735316810483389295, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
+      propertyPath: mouseSensitivity
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
 --- !u!4 &1877082229 stripped
@@ -428,8 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d975703535845a647a175c470c7e0041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 15
+  height: 15
   floor: {fileID: 688986053}
   player: {fileID: 414091261}
   wallPrefab: {fileID: 1167190820347427777, guid: 85503b549f577764ea6e675badf3d1d9, type: 3}
