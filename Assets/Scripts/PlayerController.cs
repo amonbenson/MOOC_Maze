@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
         UpdateViewing();
         UpdateMovement();
 
-        Vector2Int gridPosition = (Vector2Int) mazeController.grid.LocalToCell(transform.localPosition);
+        Vector2Int gridPosition = (Vector2Int) mazeController.grid.WorldToCell(transform.position);
         if (gridPosition != previousGridPosition) {
             gridPositionChangeEvent.Invoke(gridPosition, previousGridPosition);
             previousGridPosition = gridPosition;
