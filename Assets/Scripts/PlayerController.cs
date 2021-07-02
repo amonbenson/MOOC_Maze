@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour {
     [SerializeField] Transform playerCamera = null;
     [SerializeField] float mouseSensitivity = 300f;
-    [SerializeField] float walkSpeed = 3.0f;
+    public float walkSpeed = 3.0f;
     [SerializeField] float gravityMultiplier = 1.0f;
     [SerializeField] float jumpVelocity = 3.0f;
 

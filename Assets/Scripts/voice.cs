@@ -21,6 +21,8 @@ public class voice : MonoBehaviour
     private AudioSource soundSource;
     public AudioClip[] sounds;
 
+    private PlayerController playerController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,8 @@ public class voice : MonoBehaviour
         recognizer = new KeywordRecognizer(keyActs.Keys.ToArray());
         recognizer.OnPhraseRecognized += OnKeywordsRecognized;
         recognizer.Start();
+
+        playerController = GetComponent<PlayerController>();
     }
 
     void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
@@ -51,9 +55,13 @@ public class voice : MonoBehaviour
 
     void Run()
     {
-        if (running) { running = false; }
-        else running = true;
-        //transform.Position(1f, 20f, 30f);
+        running = !running;
+
+        if (running) {
+            playerController.walkSpeed = 15.0f;
+        } else {
+            playerController.walkSpeed = 3.0f;
+        }
     }
 
     void SpinRight()
@@ -101,7 +109,7 @@ public class voice : MonoBehaviour
 
     void Update()
     {
-        if (running)
+        /* if (running)
         {
             //get the Input from Horizontal axis
             float horizontalInput = Input.GetAxis("Horizontal");
@@ -111,6 +119,6 @@ public class voice : MonoBehaviour
             //update the position
             transform.position = transform.position + new Vector3(horizontalInput * (movementsSpeed * 2) * Time.deltaTime, verticalInput * (movementsSpeed * 2) * Time.deltaTime, 0);
             Debug.Log(new Vector3(horizontalInput * (movementsSpeed * 2) * Time.deltaTime, verticalInput * (movementsSpeed * 2) * Time.deltaTime, 0));
-        }
+        } */
     }
 }
