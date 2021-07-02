@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 
     void Update() {
         UpdateViewing();
+
         UpdateMovement();
 
         Vector2Int gridPosition = (Vector2Int) mazeController.grid.WorldToCell(transform.position);
@@ -63,7 +64,7 @@ public class PlayerController : MonoBehaviour {
             gravityVelocity = Vector3.zero;
 
             // jump
-            if (Input.GetAxis("Jump") > 0) gravityVelocity += Vector3.up * jumpVelocity;
+            if (Input.GetAxis("Jump") > 0) gravityVelocity += Vector3.up * 3 * jumpVelocity;
         } else {
             gravityVelocity += Physics.gravity * gravityMultiplier * Time.deltaTime;
         }
