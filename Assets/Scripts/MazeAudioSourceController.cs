@@ -94,7 +94,7 @@ public class MazeAudioSourceController : MonoBehaviour {
         }
 
         // calculate the shortest path to the sound source
-        Debug.Log(playerGridPosition + " : " + sourceGridPosition + " : " + mazeController.maze.size);
+        //Debug.Log(playerGridPosition + " : " + sourceGridPosition + " : " + mazeController.maze.size);
         Stack<Vector2Int> path = pathFinder.AStar(mazeController.maze, playerGridPosition, sourceGridPosition);
         if (path == null) return;
         float distance = path.Count;

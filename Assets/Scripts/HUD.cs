@@ -19,8 +19,9 @@ public class HUD : MonoBehaviour
         stambar.maxValue= playerController.stamina;
         Debug.Log("Max: " + stambar.maxValue);
         akstam= playerController.stamina;
+        stam= akstam;
         Debug.Log("Stam: " + stam);
-         Debug.Log("akStam: " + akstam);
+        Debug.Log("akStam: " + akstam);
         stambar.value = stam;
         runner= false;
     }
@@ -28,13 +29,14 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!runner){
+        /*if (!runner){
             stam=akstam;
-        }
+        }*/
         if (vv.running){
-                runner= true;
+                //runner= true;
                 if (akstam <= 0){
-                    vv.rtimer = 9999;
+                    vv.running= false;
+                    akstam = 0.01f;
                 }
                 Debug.Log("akstam: " + akstam);
                 
@@ -43,9 +45,12 @@ public class HUD : MonoBehaviour
                 stambar.value = akstam;
         }
         else {
-                runner=false;
+                //runner=false;
+                stam=akstam;
                 if (stambar.value <   stambar.maxValue)
                 stambar.value += akstam * playerController.restorestam;
+                Debug.Log("Bar: " + akstam);
+                akstam = stambar.value;
             }
     }
 }
