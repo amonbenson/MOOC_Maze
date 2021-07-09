@@ -16,7 +16,9 @@ public class HUD : MonoBehaviour
     void Start()
     {
         stambar.maxValue= playerController.stamina;
+        Debug.Log("Max: " + stambar.maxValue);
         stam= playerController.stamina;
+        Debug.Log("Stam: " + stam);
         stambar.value = stam;
         runner= false;
     }
