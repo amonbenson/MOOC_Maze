@@ -55,7 +55,7 @@ public class Voice : MonoBehaviour
     
     //[SerializeField] float movementsSpeed = 50f;
 
-    private bool running = false;
+    public bool running = false;
 
     void Run()
     {

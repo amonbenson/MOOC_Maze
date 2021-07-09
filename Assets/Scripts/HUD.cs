@@ -8,7 +8,8 @@ public class HUD : MonoBehaviour
     public Slider stambar;
     public MazeController mazeController;
     public PlayerController playerController;
-    private float stam=0;
+    public Voice vv;
+    public float stam=1;
     public float akstam=0;
     public bool runner = false;
 
@@ -17,8 +18,9 @@ public class HUD : MonoBehaviour
     {
         stambar.maxValue= playerController.stamina;
         Debug.Log("Max: " + stambar.maxValue);
-        stam= playerController.stamina;
+        akstam= playerController.stamina;
         Debug.Log("Stam: " + stam);
+         Debug.Log("akStam: " + akstam);
         stambar.value = stam;
         runner= false;
     }
@@ -27,10 +29,23 @@ public class HUD : MonoBehaviour
     void Update()
     {
         if (!runner){
+            stam=akstam;
+        }
+        if (vv.running){
+                runner= true;
+                if (akstam <= 0){
+                    vv.rtimer = 9999;
+                }
+                Debug.Log("akstam: " + akstam);
+                
+                //stamina =3, rtimer 0.00+  
+                akstam= stam - vv.rtimer;
                 stambar.value = akstam;
         }
         else {
-                stambar.value += stam * playerController.restorestam;
+                runner=false;
+                if (stambar.value <   stambar.maxValue)
+                stambar.value += akstam * playerController.restorestam;
             }
     }
 }
