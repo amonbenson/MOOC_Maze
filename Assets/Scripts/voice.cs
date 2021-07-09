@@ -61,10 +61,10 @@ public class Voice : MonoBehaviour
     {
         running = !running;
         if (running) {
-            hud.runner = true;
+            //hud.runner = true;
             playerController.walkSpeed = 15.0f;
         } else {
-            hud.runner = false;
+            //hud.runner = false;
             playerController.walkSpeed = 3.0f;
         }
     }
@@ -119,10 +119,10 @@ public class Voice : MonoBehaviour
             int seconds = (int) (rtimer % 60);
             if (seconds < playerController.stamina){
                 Debug.Log(rtimer);
-                hud.akstam= playerController.stamina * (playerController.stamina/rtimer);
+                //hud.akstam= playerController.stamina * (playerController.stamina/rtimer);
             }
             else {
-                hud.runner = false;
+                //hud.runner = false;
                 running = false;
                 rtimer=0;
                 playerController.walkSpeed = 3.0f;
