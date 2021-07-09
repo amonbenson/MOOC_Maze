@@ -5,7 +5,7 @@ using UnityEngine;
 public class MazeAudioSourceController : MonoBehaviour {
     public bool randomStart = true;
     [Range(0.0f, 10.0f)]
-    public float updateSpeed = 3f;
+    public float updateSpeed = 3f; 
 
     private AudioSource audioSource;
     private AudioReverbFilter audioReverbFilter;
@@ -19,6 +19,9 @@ public class MazeAudioSourceController : MonoBehaviour {
     private Vector3 sourceVirtualWorldPosition = Vector3.zero;
 
     private MazePathFinder pathFinder = new MazePathFinder();
+
+    private float posx= 0.0f;
+    private float posy= 0.0f;
 
     void Start() {
         audioSource = transform.GetComponentInChildren<AudioSource>();
@@ -37,6 +40,17 @@ public class MazeAudioSourceController : MonoBehaviour {
         }
 
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
+
+        // Sound Position has to been set
+        posx = mazeController.wallWidth* mazeController.width*2+2f;
+        posy = mazeController.wallWidth* mazeController.height*2+2f;
+        transform.position= new Vector3(posx, 0, posy);
+        
+        //radius has to be set (english main lul)
+        if (posx >= posy){audioSource.maxDistance= posx;}//1.9f;}
+        else {audioSource.maxDistance= posy;}//1.9f;}
+        
+
 
         // seek to a random position
         if (randomStart) audioSource.time = Random.Range(0, audioSource.clip.length);

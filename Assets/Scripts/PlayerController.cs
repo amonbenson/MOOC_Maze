@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float jumpVelocity = 3.0f;
 
     [SerializeField] bool lockCursor = true;
+    [SerializeField] public float stamina = 3.0f;
+    [SerializeField] public float restorestam = 0.2f;
+
     
     public UnityEvent<Vector2Int, Vector2Int> gridPositionChangeEvent;
 

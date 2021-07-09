@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Windows.Speech;
 
-public class voice : MonoBehaviour
+public class Voice : MonoBehaviour
 {
 
     // Voice command vars
@@ -20,8 +20,10 @@ public class voice : MonoBehaviour
     //Vars needed for sound playback.
     private AudioSource soundSource;
     public AudioClip[] sounds;
+    public float rtimer = 0.0f;
 
     private PlayerController playerController;
+    private HUD hud;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +41,7 @@ public class voice : MonoBehaviour
         recognizer.Start();
 
         playerController = GetComponent<PlayerController>();
+        hud = GetComponent<HUD>();
     }
 
     void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
@@ -49,17 +52,19 @@ public class voice : MonoBehaviour
 
 
     //movement speed in units per second
-    [SerializeField] float movementsSpeed = 50f;
+    
+    //[SerializeField] float movementsSpeed = 50f;
 
     private bool running = false;
 
     void Run()
     {
         running = !running;
-
         if (running) {
+            hud.runner = true;
             playerController.walkSpeed = 15.0f;
         } else {
+            hud.runner = false;
             playerController.walkSpeed = 3.0f;
         }
     }
@@ -109,6 +114,20 @@ public class voice : MonoBehaviour
 
     void Update()
     {
+        if (running){
+            rtimer += Time.deltaTime;
+            int seconds = (int) (rtimer % 60);
+            if (seconds < playerController.stamina){
+                Debug.Log(rtimer);
+                hud.akstam= playerController.stamina * (playerController.stamina/rtimer);
+            }
+            else {
+                hud.runner = false;
+                running = false;
+                rtimer=0;
+                playerController.walkSpeed = 3.0f;
+            }
+        }
         /* if (running)
         {
             //get the Input from Horizontal axis

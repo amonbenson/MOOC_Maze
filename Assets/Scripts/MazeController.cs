@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class MazeController : MonoBehaviour {
-    [Range(1, 50)]
+    [Range(1, 100)]
     public int width = 10;
-    [Range(1, 50)]
+    [Range(1, 100)]
     public int height = 10;
 
     public GameObject floor = null;
@@ -21,7 +21,7 @@ public class MazeController : MonoBehaviour {
     [Range(0f, 5.0f)]
     public float tokenHeight = 1.0f;
     [Range(1.0f, 5.0f)]
-    public float wallWidth = 1.0f;
+    public float wallWidth = 1.42f;
     [Range(0.0f, 5.0f)]
     public float wallHeight = 3.0f;
     [Range(0f, 1.0f)]
@@ -33,6 +33,8 @@ public class MazeController : MonoBehaviour {
     private Material floorMaterial;
     private MazeGenerator generator = null;
 
+    //public MazeAudioSourceController MazeAudio;
+
     void Start() {
         playerController = player.GetComponent<PlayerController>();
         floorMaterial = floor.GetComponent<Renderer>().sharedMaterial;
@@ -43,6 +45,8 @@ public class MazeController : MonoBehaviour {
         grid.cellGap = Vector3.zero;
 
         wallPrefab.transform.localScale = new Vector3(wallWidth, wallHeight, wallDepth);
+
+        //MazeAudio = GetComponent<MazeAudioSourceController>();
 
         // TODO: move to a higher level game controller
         maze = ScriptableObject.CreateInstance<Maze>();
