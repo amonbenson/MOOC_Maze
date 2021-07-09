@@ -1229,11 +1229,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5316553378482610665, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316553378482610665, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -27.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995168, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: updateSmoothness
@@ -1253,7 +1253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -62.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1261,7 +1261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5316553379555995171, guid: 57783506d54767949bfc25ba5778c4db, type: 3}
       propertyPath: m_LocalRotation.w
