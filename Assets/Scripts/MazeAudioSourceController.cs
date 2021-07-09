@@ -42,8 +42,8 @@ public class MazeAudioSourceController : MonoBehaviour {
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
 
         // Sound Position has to been set
-        posx = mazeController.wallWidth* mazeController.width*2+2f;
-        posy = mazeController.wallWidth* mazeController.height*2+2f;
+        posx = mazeController.wallWidth* mazeController.width - 0.25f;
+        posy = mazeController.wallWidth* mazeController.height - 0.25f;
         transform.position= new Vector3(posx, 0, posy);
         
         //radius has to be set (english main lul)
