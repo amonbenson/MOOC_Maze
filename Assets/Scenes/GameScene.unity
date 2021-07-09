@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.303
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2023121286}
-  m_IndirectSpecularColor: {r: 0.116850846, g: 0.10209059, b: 0.06964953, a: 0.303}
+  m_IndirectSpecularColor: {r: 0.11685123, g: 0.10209077, b: 0.06964968, a: 0.303}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stambar: {fileID: 952820365}
+  mazeController: {fileID: 1893058665}
+  playerController: {fileID: 414091263}
   akstam: 0
   runner: 0
 --- !u!4 &127299406
@@ -397,6 +399,17 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &414091263 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 735316810483389295, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
+  m_PrefabInstance: {fileID: 1877082228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 414091261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47fd06c682ec4a24d8b93c1bac2baca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &414091264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,10 +422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550d8922667e1994f977ac259ac28af1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - {fileID: 8300000, guid: 676d3b3cf17ac1242a405294286393ee, type: 3}
-  - {fileID: 8300000, guid: d964f6e7cf0be2144a6d1d0df2ca4f0c, type: 3}
-  rtimer: 0
 --- !u!1 &544814166
 GameObject:
   m_ObjectHideFlags: 0

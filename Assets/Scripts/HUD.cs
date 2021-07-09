@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class HUD : MonoBehaviour
 {
     public Slider stambar;
-    private MazeController mazeController;
-    private PlayerController playerController;
+    public MazeController mazeController;
+    public PlayerController playerController;
     private float stam=0;
     public float akstam=0;
     public bool runner = false;
@@ -15,9 +15,6 @@ public class HUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mazeController = GetComponentInParent<MazeController>();
-        playerController = mazeController.GetComponentInChildren<PlayerController>();
-
         stambar.maxValue= playerController.stamina;
         stam= playerController.stamina;
         stambar.value = stam;
