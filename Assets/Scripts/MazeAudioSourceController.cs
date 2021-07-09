@@ -42,9 +42,9 @@ public class MazeAudioSourceController : MonoBehaviour {
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
 
         // Sound Position has to been set
-        posx = mazeController.wallWidth* mazeController.width - 0.25f;
-        posy = mazeController.wallWidth* mazeController.height - 0.25f;
-        transform.position= new Vector3(posx, 0, posy);
+        posx = mazeController.wallWidth * mazeController.width - 0.25f;
+        posy = mazeController.wallWidth * mazeController.height - 0.25f;
+        transform.position = new Vector3(posx, 0, posy);
         
         //radius has to be set (english main lul)
         if (posx >= posy){audioSource.maxDistance= posx;}//1.9f;}
@@ -94,6 +94,7 @@ public class MazeAudioSourceController : MonoBehaviour {
         }
 
         // calculate the shortest path to the sound source
+        Debug.Log(playerGridPosition + " : " + sourceGridPosition + " : " + mazeController.maze.size);
         Stack<Vector2Int> path = pathFinder.AStar(mazeController.maze, playerGridPosition, sourceGridPosition);
         if (path == null) return;
         float distance = path.Count;
