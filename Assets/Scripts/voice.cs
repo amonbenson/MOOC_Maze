@@ -66,6 +66,7 @@ public class Voice : MonoBehaviour
         } else {
             //hud.runner = false;
             playerController.walkSpeed = 3.0f;
+            rtimer= 0.0f;
         }
     }
 
@@ -118,15 +119,19 @@ public class Voice : MonoBehaviour
             rtimer += Time.deltaTime;
             int seconds = (int) (rtimer % 60);
             if (seconds < playerController.stamina){
-                Debug.Log(rtimer);
+                //Debug.Log( "Rtimer:"+ rtimer + "___ delta:"+ Time.deltaTime);
                 //hud.akstam= playerController.stamina * (playerController.stamina/rtimer);
             }
             else {
-                //hud.runner = false;
                 running = false;
-                rtimer=0;
+                rtimer=0.0f;
                 playerController.walkSpeed = 3.0f;
             }
+        }
+        else {
+            rtimer= 0.0f;
+            playerController.walkSpeed = 3.0f;
+            //Debug.Log("Help:"+rtimer);
         }
         /* if (running)
         {

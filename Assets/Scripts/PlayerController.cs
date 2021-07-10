@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] public float stamina = 3.0f;
     [SerializeField] public float restorestam = 0.2f;
 
-    
+    public bool collectcoin = false;
+
     public UnityEvent<Vector2Int, Vector2Int> gridPositionChangeEvent;
 
     private Vector2 viewingAngle = Vector2.zero;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Token")) {
             Debug.Log("Token Collected!");
+            collectcoin= true;
             Destroy(other.gameObject);
         }
     }
