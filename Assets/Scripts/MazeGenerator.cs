@@ -14,7 +14,7 @@ public struct Neighbour
 }
 
 public class MazeGenerator {
-    public const int TOKEN_DENSITY = 5;
+    public const int TOKEN_DENSITY = 2;
 
     private int seed;
     private System.Random random;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -19,6 +20,12 @@ public class HUD : MonoBehaviour
     private int anzcoins= 0;
     private float timer = 0.0f;
 
+    private Boolean gameRunning;
+    
+    void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +39,7 @@ public class HUD : MonoBehaviour
         runner= false;
 
         timer = 0.0f;
+        gameRunning = false;
 
         UpdateTokenText();
         UpdateTimerText();
@@ -40,8 +48,10 @@ public class HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        UpdateTimerText();
+        if (gameRunning) {
+            timer += Time.deltaTime;
+            UpdateTimerText();
+        }
 
         /*if (!runner){
             stam=akstam;
@@ -70,24 +80,39 @@ public class HUD : MonoBehaviour
         if (playerController.collectcoin){
             playerController.collectcoin = false;
 
-            if (anzcoins < maxcoins) {
-                anzcoins++;
-                UpdateTokenText();
-            } else {
+            anzcoins++;
+            if (anzcoins >= maxcoins) {
                 anzcoins = maxcoins;
                 tokenText.color= new Color(0.02352941f,0.7490196f,0.7450981f,1);
             }
+
+            UpdateTokenText();
         }
 
         if (playerController.targetreached) {
             playerController.targetreached = false;
 
-            if (anzcoins < maxcoins) {
-                Debug.Log("NOT ENOUGH COINS");
-            } else {
-                Debug.Log("GAME END!!!");
+            if (anzcoins >= maxcoins) {
+                EndGame();
             }
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        // start the game (an therefore the timer) only when everything has loaded
+        StartGame();
+    }
+
+    public void StartGame() {
+        gameRunning = true;
+    }
+
+    public void EndGame() {
+        gameRunning = false;
+
+        Debug.Log("Game Finished in " + timer + " seconds.");
+
+        // TODO: switch to some Win Scene
     }
 
     void UpdateTokenText() {

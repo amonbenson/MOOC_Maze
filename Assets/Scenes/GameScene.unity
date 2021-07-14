@@ -1666,6 +1666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 8
   height: 8
+  hud: {fileID: 127299405}
   floor: {fileID: 688986053}
   player: {fileID: 414091261}
   target: {fileID: 1366485281}

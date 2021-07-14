@@ -1,13 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MazeController : MonoBehaviour {
     [Range(1, 100)]
     public int width = 10;
     [Range(1, 100)]
     public int height = 10;
+
+    public HUD hud = null;
 
     public GameObject floor = null;
     public GameObject player = null;
@@ -56,7 +57,14 @@ public class MazeController : MonoBehaviour {
         generator = new MazeGenerator();
         generator.Generate(ref maze);
 
-        StartCoroutine(RenderNextFrame());
+        // StartCoroutine(RenderNextFrame());
+        Render();
+
+        // start playing the target sound
+        target.GetComponentInChildren<AudioSource>().Play();
+
+        // start the HUD
+        hud.StartGame();
     }
 
     private IEnumerator RenderNextFrame() {

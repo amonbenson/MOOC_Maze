@@ -87,14 +87,14 @@ public class MazeAudioSourceController : MonoBehaviour {
         // we are on the same cell (normaly the audio source should get destroyed at this point)
         if (playerGridPosition == sourceGridPosition) {
             audioSource.transform.position = transform.position;
-            if (!audioSource.isPlaying) audioSource.Play();
+            audioSource.volume = 1.0f;
             return;
         }
 
         // check the distance
         float airDistance = Vector2.Distance(playerGridPosition, sourceGridPosition);
         if (airDistance >= audioSource.maxDistance) {
-            audioSource.Pause();
+            audioSource.volume = 0.0f;
             return;
         }
 
@@ -123,7 +123,7 @@ public class MazeAudioSourceController : MonoBehaviour {
         sourceVirtualWorldPosition.y = transform.position.y; // do not change the y transform
 
         // play the audio
-        if (!audioSource.isPlaying) audioSource.Play();
+        audioSource.volume = 1.0f;
         
         // update the reverb amount
         audioReverbFilter.room = Mathf.Lerp(-10000, 0, distance / audioSource.maxDistance);
