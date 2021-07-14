@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
+    public string titleScene;
+
     public Slider stambar;
     public Text tokenText, timerText;
     public MazeController mazeController;
@@ -21,10 +23,6 @@ public class HUD : MonoBehaviour
     private float timer = 0.0f;
 
     private Boolean gameRunning;
-    
-    void OnEnable() {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -98,11 +96,6 @@ public class HUD : MonoBehaviour
         }
     }
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
-        // start the game (an therefore the timer) only when everything has loaded
-        StartGame();
-    }
-
     public void StartGame() {
         gameRunning = true;
     }
@@ -112,7 +105,9 @@ public class HUD : MonoBehaviour
 
         Debug.Log("Game Finished in " + timer + " seconds.");
 
-        // TODO: switch to some Win Scene
+        // append the score
+        GlobalGameSettings.scoreList.Add(timer);
+        SceneManager.LoadScene(titleScene);
     }
 
     void UpdateTokenText() {

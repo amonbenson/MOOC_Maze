@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] Transform playerCamera = null;
@@ -27,13 +28,26 @@ public class PlayerController : MonoBehaviour {
 
     private Vector2Int previousGridPosition = Vector2Int.zero;
 
+    void Awake() {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
     void Start() {
         mazeController = GetComponentInParent<MazeController>();
         characterController = GetComponent<CharacterController>();
 
+        // hide and lock the cursor
         if (lockCursor) {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+    }
+
+    void OnSceneUnloaded<Scene>(Scene scene) {
+        // restore the cursor
+        if (lockCursor) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
