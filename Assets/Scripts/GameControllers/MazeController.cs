@@ -38,6 +38,8 @@ public class MazeController : MonoBehaviour {
     //public MazeAudioSourceController MazeAudio;
 
     void Start() {
+        Debug.Log("audio output -> " + GlobalGameSettings.enableAudioOutput + ", voice control -> " + GlobalGameSettings.enableVoiceControl);
+
         playerController = player.GetComponent<PlayerController>();
         floorMaterial = floor.GetComponent<Renderer>().sharedMaterial;
 
