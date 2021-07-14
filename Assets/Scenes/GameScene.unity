@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.303
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2023121286}
-  m_IndirectSpecularColor: {r: 0.116850846, g: 0.10209059, b: 0.06964953, a: 0.303}
+  m_IndirectSpecularColor: {r: 0.11685123, g: 0.10209077, b: 0.06964968, a: 0.303}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -428,6 +428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds: []
   rtimer: 0
+  keyCommandsEnabled: 1
   running: 0
 --- !u!1 &544814166
 GameObject:
@@ -1735,8 +1736,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d975703535845a647a175c470c7e0041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 100
-  height: 100
+  width: 20
+  height: 20
   floor: {fileID: 688986053}
   player: {fileID: 414091261}
   wallPrefab: {fileID: 1167190820347427777, guid: 85503b549f577764ea6e675badf3d1d9, type: 3}

@@ -25,6 +25,8 @@ public class Voice : MonoBehaviour
     private PlayerController playerController;
     private HUD hud;
 
+    public Boolean keyCommandsEnabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,6 +117,13 @@ public class Voice : MonoBehaviour
 
     void Update()
     {
+        // alternative input method using keys (for debugging when I cannot use microphone input)
+        if (keyCommandsEnabled) {
+            if (Input.GetKeyDown(KeyCode.R)) Run();
+            if (Input.GetKeyDown(KeyCode.Q)) SpinLeft();
+            if (Input.GetKeyDown(KeyCode.E)) SpinRight();
+        }
+
         if (running){
             rtimer += Time.deltaTime;
             int seconds = (int) (rtimer % 60);
