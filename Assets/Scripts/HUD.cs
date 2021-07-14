@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
     public Slider stambar;
-    public Text text;
+    public Text tokenText, timerText;
     public MazeController mazeController;
     public PlayerController playerController;
     public Voice vv;
@@ -16,6 +17,7 @@ public class HUD : MonoBehaviour
 
     [SerializeField] int maxcoins = 3;
     private int anzcoins= 0;
+    private float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +31,18 @@ public class HUD : MonoBehaviour
         stambar.value = stam;
         runner= false;
 
-        
-        text.text= anzcoins+"/"+maxcoins;
+        timer = 0.0f;
+
+        UpdateTokenText();
+        UpdateTimerText();
     }
 
     // Update is called once per frame
     void Update()
     {
+        timer += Time.deltaTime;
+        UpdateTimerText();
+
         /*if (!runner){
             stam=akstam;
         }*/
@@ -61,11 +68,33 @@ public class HUD : MonoBehaviour
         }
 
         if (playerController.collectcoin){
-                anzcoins ++; 
-                text.text= anzcoins+"/"+maxcoins;
-                playerController.collectcoin= false;
-                                                            // 6            220         212
-                if (anzcoins >= maxcoins) text.color= new Color(0.02352941f,0.7490196f,0.7450981f,1);
+            playerController.collectcoin = false;
+
+            if (anzcoins < maxcoins) {
+                anzcoins++;
+                UpdateTokenText();
+            } else {
+                anzcoins = maxcoins;
+                tokenText.color= new Color(0.02352941f,0.7490196f,0.7450981f,1);
+            }
         }
+
+        if (playerController.targetreached) {
+            playerController.targetreached = false;
+
+            if (anzcoins < maxcoins) {
+                Debug.Log("NOT ENOUGH COINS");
+            } else {
+                Debug.Log("GAME END!!!");
+            }
+        }
+    }
+
+    void UpdateTokenText() {
+        tokenText.text = anzcoins + "/" + maxcoins;
+    }
+
+    void UpdateTimerText() {
+        timerText.text = "Time: " + TimeSpan.FromSeconds(timer).ToString("ss\\.fff") + "s";
     }
 }

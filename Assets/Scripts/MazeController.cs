@@ -11,6 +11,7 @@ public class MazeController : MonoBehaviour {
 
     public GameObject floor = null;
     public GameObject player = null;
+    public GameObject target = null;
 
     public GameObject wallPrefab = null;
     public GameObject tokenPrefab = null;
@@ -81,9 +82,13 @@ public class MazeController : MonoBehaviour {
         Clear();
         if (maze == null) return;
 
+        // place the target
+        target.transform.localPosition = grid.CellToLocalInterpolated(maze.size - Vector2.one * 0.5f) +
+            Vector3.up * tokenHeight;
+
         // place the player
-        player.transform.localPosition = grid.CellToLocalInterpolated(new Vector2(0.5f, 0.5f));
-        playerController.LookAt(grid.CellToLocal(Vector3Int.one));
+        player.transform.localPosition = grid.CellToLocalInterpolated(Vector2.one * 0.5f);
+        playerController.LookAt(target.transform.position);
 
         // resize the floor
         floor.transform.localScale = CellToLocalScale(maze.size);

@@ -20,8 +20,10 @@ public class MazeAudioSourceController : MonoBehaviour {
 
     private MazePathFinder pathFinder = new MazePathFinder();
 
+    /*
     private float posx= 0.0f;
     private float posy= 0.0f;
+    */
 
     void Start() {
         audioSource = transform.GetComponentInChildren<AudioSource>();
@@ -41,6 +43,10 @@ public class MazeAudioSourceController : MonoBehaviour {
 
         playerController.gridPositionChangeEvent.AddListener(OnGridPositionChange);
 
+        // problem with this approach: the target audio source starts of at position (0, 0), so the
+        // distance will get set to zero.
+        // solution: update the audio distance AFTER the maze was renderered
+        /* 
         // Sound Position has to been set
         posx = mazeController.wallWidth * mazeController.width - 0.25f;
         posy = mazeController.wallWidth * mazeController.height - 0.25f;
@@ -49,8 +55,7 @@ public class MazeAudioSourceController : MonoBehaviour {
         //radius has to be set (english main lul)
         if (posx >= posy){audioSource.maxDistance= posx;}//1.9f;}
         else {audioSource.maxDistance= posy;}//1.9f;}
-        
-
+        */
 
         // seek to a random position
         if (randomStart) audioSource.time = Random.Range(0, audioSource.clip.length);

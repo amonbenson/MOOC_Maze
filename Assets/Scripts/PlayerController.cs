@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] public float restorestam = 0.2f;
 
     public bool collectcoin = false;
+    public bool targetreached = false;
 
     public UnityEvent<Vector2Int, Vector2Int> gridPositionChangeEvent;
 
@@ -83,6 +84,10 @@ public class PlayerController : MonoBehaviour {
             Debug.Log("Token Collected!");
             collectcoin= true;
             Destroy(other.gameObject);
+        }
+
+        if (other.CompareTag("Target")) {
+            targetreached=true;
         }
     }
 
