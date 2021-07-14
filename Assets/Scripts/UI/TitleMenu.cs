@@ -17,9 +17,11 @@ public class TitleMenu : MonoBehaviour {
     }
 
     public void StartGame() {
-        GlobalGameSettings.enableAudioOutput = enableAudioOutput.isOn;
-        GlobalGameSettings.enableVoiceControl = enableVoiceControl.isOn;
+        // setup the global settings
+        GlobalGameSettings.audioOutputEnabled = enableAudioOutput.isOn;
+        GlobalGameSettings.voiceControlEnabled = enableVoiceControl.isOn;
 
+        // load the scene. It will access the global settings set above
         SceneManager.LoadScene(gameScene);
     }
 

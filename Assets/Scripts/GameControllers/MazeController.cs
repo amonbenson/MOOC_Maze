@@ -38,7 +38,7 @@ public class MazeController : MonoBehaviour {
     //public MazeAudioSourceController MazeAudio;
 
     void Start() {
-        Debug.Log("audio output -> " + GlobalGameSettings.enableAudioOutput + ", voice control -> " + GlobalGameSettings.enableVoiceControl);
+        Debug.Log("audio output -> " + GlobalGameSettings.audioOutputEnabled + ", voice control -> " + GlobalGameSettings.voiceControlEnabled);
 
         playerController = player.GetComponent<PlayerController>();
         floorMaterial = floor.GetComponent<Renderer>().sharedMaterial;
@@ -63,7 +63,9 @@ public class MazeController : MonoBehaviour {
         Render();
 
         // start playing the target sound
-        target.GetComponentInChildren<AudioSource>().Play();
+        if (GlobalGameSettings.audioOutputEnabled) {
+            target.GetComponentInChildren<AudioSource>().Play();
+        }
 
         // start the HUD
         hud.StartGame();

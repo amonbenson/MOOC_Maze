@@ -48,6 +48,9 @@ public class Voice : MonoBehaviour
 
     void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
     {
+        // ignore if voice control is disabled
+        if (!GlobalGameSettings.voiceControlEnabled) return;
+
         Debug.Log("Command: " + args.text);
         keyActs[args.text].Invoke();
     }
@@ -118,7 +121,7 @@ public class Voice : MonoBehaviour
     void Update()
     {
         // alternative input method using keys (for debugging when I cannot use microphone input)
-        if (keyCommandsEnabled) {
+        if (keyCommandsEnabled && GlobalGameSettings.voiceControlEnabled) {
             if (Input.GetKeyDown(KeyCode.R)) Run();
             if (Input.GetKeyDown(KeyCode.Q)) SpinLeft();
             if (Input.GetKeyDown(KeyCode.E)) SpinRight();
