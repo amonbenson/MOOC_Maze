@@ -103,7 +103,7 @@ public class HUD : MonoBehaviour
     public void EndGame() {
         gameRunning = false;
 
-        Debug.Log("Game Finished in " + timer + " seconds.");
+        //Debug.Log("Game Finished in " + timer + " seconds.");
 
         // append the score
         GlobalGameSettings.scoreList.Add(timer);

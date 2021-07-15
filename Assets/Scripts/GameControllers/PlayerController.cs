@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Token")) {
-            Debug.Log("Token Collected!");
+            //Debug.Log("Token Collected!");
             collectcoin= true;
             Destroy(other.gameObject);
         }

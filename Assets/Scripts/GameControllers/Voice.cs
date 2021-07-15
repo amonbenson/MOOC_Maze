@@ -121,7 +121,7 @@ public class Voice : MonoBehaviour
 
     void FactAcknowledgement()
     {
-        Debug.Log("How right you are.");
+        //Debug.Log("How right you are.");
     }
 
 
@@ -161,7 +161,7 @@ public class Voice : MonoBehaviour
 
             //update the position
             transform.position = transform.position + new Vector3(horizontalInput * (movementsSpeed * 2) * Time.deltaTime, verticalInput * (movementsSpeed * 2) * Time.deltaTime, 0);
-            Debug.Log(new Vector3(horizontalInput * (movementsSpeed * 2) * Time.deltaTime, verticalInput * (movementsSpeed * 2) * Time.deltaTime, 0));
+            //Debug.Log(new Vector3(horizontalInput * (movementsSpeed * 2) * Time.deltaTime, verticalInput * (movementsSpeed * 2) * Time.deltaTime, 0));
         } */
     }
 }
