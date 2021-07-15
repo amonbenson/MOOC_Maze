@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour {
             gravityVelocity = Vector3.zero;
 
             // jump
-            if (Input.GetAxis("Jump") > 0) gravityVelocity += Vector3.up * 3 * jumpVelocity;
+            if (Input.GetAxis("Jump") > 0) gravityVelocity += Vector3.up * jumpVelocity;
         } else {
             gravityVelocity += Physics.gravity * gravityMultiplier * Time.deltaTime;
         }

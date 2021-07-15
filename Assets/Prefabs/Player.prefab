@@ -148,11 +148,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 735316810162986231}
-  mouseSensitivity: 300
+  mouseSensitivity: 3
   walkSpeed: 3
   gravityMultiplier: 1
   jumpVelocity: 3
   lockCursor: 1
+  stamina: 3
+  restorestam: 0.2
+  collectcoin: 0
+  targetreached: 0
+  gridPositionChangeEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &929834946552690802
 GameObject:
   m_ObjectHideFlags: 0

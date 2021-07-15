@@ -74,7 +74,7 @@ public class Voice : MonoBehaviour
         running = !running;
         if (running) {
             //hud.runner = true;
-            playerController.walkSpeed = 15.0f;
+            playerController.walkSpeed = 7.0f;
         } else {
             //hud.runner = false;
             playerController.walkSpeed = 3.0f;

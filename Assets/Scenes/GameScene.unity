@@ -1593,11 +1593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 735316810483389295, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
       propertyPath: jumpVelocity
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 735316810483389295, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
-      propertyPath: mouseSensitivity
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c49a70438d7d3b4f8fc65cf07c1ec19, type: 3}
