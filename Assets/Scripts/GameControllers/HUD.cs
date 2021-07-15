@@ -115,6 +115,6 @@ public class HUD : MonoBehaviour
     }
 
     void UpdateTimerText() {
-        timerText.text = "Time: " + TimeSpan.FromSeconds(timer).ToString("ss\\.fff") + "s";
+        timerText.text = "Time: " + TimeSpan.FromSeconds(timer).ToString("mm\\:ss\\.fff") + "s";
     }
 }

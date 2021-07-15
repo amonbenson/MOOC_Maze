@@ -13,7 +13,8 @@ public struct Neighbour
 }
 
 public class MazeGenerator {
-    public const int TOKEN_DENSITY = 2;
+    public const int RANDOM_TOKEN_DENSITY = 4;
+    public const int PATH_TOKEN_DENSITY = 4;
 
     private int seed;
     private System.Random random;
@@ -129,16 +130,39 @@ public class MazeGenerator {
     private void GenerateTokens() {
         maze.tokens = new List<Vector2Int>();
 
-        // generate a token every TOKEN_DENSITY column and row
-        for (int x = random.Next(0, TOKEN_DENSITY); x < maze.size.x; x += TOKEN_DENSITY) {
-            for (int y = random.Next(0, TOKEN_DENSITY); y < maze.size.y; y += TOKEN_DENSITY) {
+        // generate a token every RANDOM_TOKEN_DENSITY column and row
+        for (int x = random.Next(0, RANDOM_TOKEN_DENSITY); x < maze.size.x; x += RANDOM_TOKEN_DENSITY) {
+            for (int y = random.Next(0, RANDOM_TOKEN_DENSITY); y < maze.size.y; y += RANDOM_TOKEN_DENSITY) {
                 // offset the position using a normal distribution
-                var position = new Vector2Int(
-                    Mathf.RoundToInt(NextGaussian(x, TOKEN_DENSITY / 2.0f)),
-                    Mathf.RoundToInt(NextGaussian(y, TOKEN_DENSITY / 2.0f))
+                /*var position = new Vector2Int(
+                    Mathf.RoundToInt(NextGaussian(x, RANDOM_TOKEN_DENSITY / 2.0f)),
+                    Mathf.RoundToInt(NextGaussian(y, RANDOM_TOKEN_DENSITY / 2.0f))
                 );
-                position.Clamp(Vector2Int.zero, maze.size - Vector2Int.one);
+                position.Clamp(Vector2Int.zero, maze.size - Vector2Int.one);*/
+                var position = new Vector2Int(x, y);
 
+                // add the token if it does not conver the origin or target
+                if (position != Vector2.zero && position != maze.size - Vector2Int.one) {
+                    maze.tokens.Add(position);
+                }
+            }
+        }
+
+        // generate additional tokens along the target path every PATH_TOKEN_DENSITY cell
+        var mpf = new MazePathFinder();
+        Stack<Vector2Int> path = mpf.AStar(maze, Vector2Int.zero, maze.size - Vector2Int.one);
+        var pathlength = path.Count;
+
+        while (path.Count > 0) {
+            for (var i = 0; i < PATH_TOKEN_DENSITY && path.Count > 0; i++) path.Pop();
+            if (path.Count == 0) break;
+
+            // add a token if it does not exist already and does not cover the origin or target
+            var position = path.Peek();
+            Debug.Log("place token at " + position);
+            if (!maze.tokens.Contains(position)
+                    && position != Vector2.zero
+                    && position != maze.size - Vector2Int.one) {
                 maze.tokens.Add(position);
             }
         }

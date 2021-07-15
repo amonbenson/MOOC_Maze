@@ -37,7 +37,7 @@ public class TitleMenu : MonoBehaviour {
         } else {
             var i = 0;
             foreach (var time in GlobalGameSettings.scoreList) {
-                scoreList.text += "  #" + (++i) + "   " + TimeSpan.FromSeconds(time).ToString("ss\\.fff") + "s\n";
+                scoreList.text += "           #" + (++i) + "   " + TimeSpan.FromSeconds(time).ToString("mm\\:ss\\.fff") + "s\n";
             }
         }
     }
