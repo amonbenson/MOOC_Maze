@@ -74,10 +74,10 @@ public class Voice : MonoBehaviour
         running = !running;
         if (running) {
             //hud.runner = true;
-            playerController.walkSpeed = 7.0f;
+            playerController.StartRun();
         } else {
             //hud.runner = false;
-            playerController.walkSpeed = 3.0f;
+            playerController.StopRun();
             rtimer= 0.0f;
         }
     }
@@ -144,12 +144,12 @@ public class Voice : MonoBehaviour
             else {
                 running = false;
                 rtimer=0.0f;
-                playerController.walkSpeed = 3.0f;
+                playerController.StopRun();
             }
         }
         else {
             rtimer= 0.0f;
-            playerController.walkSpeed = 3.0f;
+            playerController.StopRun();
             //Debug.Log("Help:"+rtimer);
         }
         /* if (running)

@@ -5,15 +5,18 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
-    [SerializeField] Transform playerCamera = null;
-    [SerializeField] float mouseSensitivity = 300f;
-    public float walkSpeed = 3.0f;
-    [SerializeField] float gravityMultiplier = 1.0f;
-    [SerializeField] float jumpVelocity = 3.0f;
+    public Transform playerCamera = null;
+    public float mouseSensitivity = 300f;
 
-    [SerializeField] bool lockCursor = true;
-    [SerializeField] public float stamina = 3.0f;
-    [SerializeField] public float restorestam = 0.2f;
+    public float walkSpeed = 3.0f;
+    public float runSpeed = 7.0f;
+
+    public float gravityMultiplier = 1.0f;
+    public float jumpVelocity = 3.0f;
+
+    public bool lockCursor = true;
+    public float stamina = 3.0f;
+    public float restorestam = 0.2f;
 
     public bool collectcoin = false;
     public bool targetreached = false;
@@ -27,6 +30,7 @@ public class PlayerController : MonoBehaviour {
     private CharacterController characterController = null;
 
     private Vector2Int previousGridPosition = Vector2Int.zero;
+    private bool running;
 
     void Awake() {
         SceneManager.sceneUnloaded += OnSceneUnloaded;
@@ -78,6 +82,11 @@ public class PlayerController : MonoBehaviour {
         Vector2 inputDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         if (inputDirection.magnitude > 1.0f) inputDirection.Normalize();
 
+        // if we are running, but not pressing any buttons, we default to a forward direction
+        if (running && inputDirection.magnitude <= 0.01f) {
+            inputDirection = Vector2.up;
+        }
+
         // apply gravity
         if (characterController.isGrounded) {
             gravityVelocity = Vector3.zero;
@@ -89,7 +98,9 @@ public class PlayerController : MonoBehaviour {
         }
 
         // move the player
-        Vector3 velocity = (transform.forward * inputDirection.y + transform.right * inputDirection.x) * walkSpeed + gravityVelocity;
+        float speed = running ? runSpeed : walkSpeed;
+        Vector3 transformedDirection = transform.forward * inputDirection.y + transform.right * inputDirection.x;
+        Vector3 velocity = transformedDirection * speed + gravityVelocity;
         characterController.Move(velocity * Time.deltaTime);
     }
 
@@ -108,5 +119,13 @@ public class PlayerController : MonoBehaviour {
     public void LookAt(Vector3 target) {
         var euler = (Vector2) Quaternion.LookRotation(target - playerCamera.position, Vector3.up).eulerAngles;
         viewingAngle = new Vector2(euler.y, -euler.x);
+    }
+
+    public void StartRun() {
+        running = true;
+    }
+
+    public void StopRun() {
+        running = false;
     }
 }
