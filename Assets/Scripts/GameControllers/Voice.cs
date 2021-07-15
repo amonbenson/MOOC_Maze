@@ -46,6 +46,11 @@ public class Voice : MonoBehaviour
         hud = GetComponent<HUD>();
     }
 
+    void OnDestroy() {
+        // destroy the old recognizer
+        recognizer.Dispose();
+    }
+
     void OnKeywordsRecognized(PhraseRecognizedEventArgs args)
     {
         // ignore if voice control is disabled

@@ -95,11 +95,11 @@ public class MazeController : MonoBehaviour {
         if (maze == null) return;
 
         // place the target
-        target.transform.localPosition = grid.CellToLocalInterpolated(maze.size - Vector2.one * 0.5f) +
+        target.transform.localPosition = grid.GetCellCenterLocal((Vector3Int) maze.size - Vector3Int.one) +
             Vector3.up * tokenHeight;
 
         // place the player
-        player.transform.localPosition = grid.CellToLocalInterpolated(Vector2.one * 0.5f);
+        player.transform.localPosition = grid.GetCellCenterLocal(Vector3Int.zero);
         playerController.LookAt(target.transform.position);
 
         // resize the floor

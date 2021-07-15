@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /*
 Maze Generator loosly based on: https://github.com/gamedolphin/youtube_unity_maze
@@ -21,7 +20,8 @@ public class MazeGenerator {
     private Maze maze = null;
 
     public MazeGenerator() {
-        seed = Environment.TickCount;
+        seed = GlobalGameSettings.seed;
+
         random = new System.Random(seed);
         Debug.Log("Generator using seed " + seed);
     }
@@ -68,9 +68,11 @@ public class MazeGenerator {
             }
         }
 
-        // entrance and exit
+        // entrance and exit (not used here)
+        /*
         maze.walls[0, 0] &= ~Maze.WallState.DOWN & ~Maze.WallState.LEFT;
         maze.walls[maze.size.x - 1, maze.size.y - 1] &= ~Maze.WallState.UP & ~Maze.WallState.RIGHT;
+        */
     }
 
     private List<Neighbour> GetUnvisitedNeighbours(Vector2Int p)
