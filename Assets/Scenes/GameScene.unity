@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds: []
   rtimer: 0
-  keyCommandsEnabled: 1
+  keyCommandsEnabled: 0
   running: 0
 --- !u!1 &544814166
 GameObject:

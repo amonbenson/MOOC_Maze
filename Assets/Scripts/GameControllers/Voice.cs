@@ -32,6 +32,7 @@ public class Voice : MonoBehaviour
     {
         cubeRend = GetComponent<MeshRenderer>();
         soundSource = GetComponent<AudioSource>();
+
         keyActs.Add("run", Run);
         //Voice commands for spinning
         keyActs.Add("spin right", SpinRight);
@@ -48,6 +49,7 @@ public class Voice : MonoBehaviour
 
     void OnDestroy() {
         // destroy the old recognizer
+        recognizer.Stop();
         recognizer.Dispose();
     }
 
